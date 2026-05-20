@@ -620,6 +620,37 @@ export default {
       })
 
       if (!anthropicRes.ok) {
+        if (anthropicRes.status === 529 || anthropicRes.status === 503) {
+          // Overloaded — wait 2s and retry with fallback model
+          await new Promise(r => setTimeout(r, 2000))
+          const retry = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': env.ANTHROPIC_API_KEY,
+              'anthropic-version': '2023-06-01'
+            },
+            body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 512, system: systemPrompt, messages: trimmed })
+          })
+          if (retry.ok) {
+            const retryData = await retry.json()
+            return json({ reply: retryData.content?.[0]?.text ?? '' })
+          }
+          // Second attempt with older stable model
+          await new Promise(r => setTimeout(r, 2000))
+          const retry2 = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-api-key': env.ANTHROPIC_API_KEY,
+              'anthropic-version': '2023-06-01'
+            },
+            body: JSON.stringify({ model: 'claude-3-haiku-20240307', max_tokens: 512, system: systemPrompt, messages: trimmed })
+          })
+          if (!retry2.ok) return json({ error: 'Coach is unavailable right now. Try again in a moment.' }, 502)
+          const retry2Data = await retry2.json()
+          return json({ reply: retry2Data.content?.[0]?.text ?? '' })
+        }
         return json({ error: 'Coach is unavailable right now. Try again in a moment.' }, 502)
       }
 
