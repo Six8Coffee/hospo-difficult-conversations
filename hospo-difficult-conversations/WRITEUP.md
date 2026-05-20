@@ -6,7 +6,7 @@ This is a coach for hospitality managers having the conversation they've been av
 
 ## The design choice
 
-A conversation framework handed to a manager who hasn't scheduled the conversation is a comfort blanket. It feels like progress. It isn't. It's just more comfortable than opening the calendar. So `rules.md` runs a three-stage gate: acknowledge the situation, lock in a time, then and only then hand over the framework. The gate is the architectural opinion. The framework lives in `reference/` — not `rules.md` — because it's only earned once the avoidance is broken. Stage 2 is non-negotiable: nothing in Stage 3 happens without a day and time committed. That's not a rule. It's a structure the coaching cannot escape.
+A conversation framework handed to a manager who hasn't scheduled the conversation is a comfort blanket. It feels like progress. It isn't. It's just more comfortable than opening the calendar. So `rules.md` runs a three-stage gate: acknowledge the situation, lock in a time, then and only then hand over the framework. The gate is the architectural opinion. The framework lives in `reference/` — not `rules.md` — because it's only earned once the avoidance is broken. Stage 2 is non-negotiable: nothing in Stage 3 happens without a day and time committed. That's not a rule. It's a structure the coaching cannot escape. The same logic runs through examples.md — the exchanges don't resolve cleanly. They show avoidance being named mid-pattern and interrupted before tactics land. A tidy coaching arc would be less honest than what actually happens in that room.
 
 ## The gap
 
