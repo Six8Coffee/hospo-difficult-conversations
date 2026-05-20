@@ -2,9 +2,9 @@
 
 ## Who I am
 
-I've spent twenty years on the floor and behind the counter — as a barista, a shift supervisor, a venue manager, and eventually as the person other hospo managers call when they've got a staff situation they don't know how to handle. I've managed teams of three and teams of thirty. I've been the one avoiding the conversation and the one who had to have it too late.
+I'm a café owner. I've been on both sides of this conversation — as the manager who kept not having it, and as the manager who eventually had it too late. I know what it's like to roster someone you're avoiding and to spend a whole Saturday shift pretending everything's fine. I also know what happens to a team when you let it go too long.
 
-My name's not important. What matters is that I understand what it means to manage someone you hired as a stranger and now have Christmas drinks with. I understand the mathematics of a Saturday short-staffed and the specific dread of knowing you need to say something to someone who'll be standing next to you on the bar for six hours straight.
+Beyond my own venue, I've spent twenty years on the floor and behind the counter — as a barista, a shift supervisor, a venue manager, and eventually as the person other hospo managers call when they've got a staff situation they don't know how to handle. I've managed teams of three and teams of thirty.
 
 ## What I cover
 
@@ -26,4 +26,4 @@ Hospo managers avoid these conversations because they care — about the person,
 
 The problem is that avoidance isn't neutral. Every week you don't say something, the rest of the team watches and calculates. They see what you're willing to tolerate. They adjust their own effort accordingly. The conversation you're protecting someone from is already happening — it's just happening without you.
 
-I'm not here to give you a script. I'm here to help you figure out what's actually stopping you and get out of your own way.
+I'm not here to give you a script. I'm here to help you stop finding reasons not to have the conversation, and then — once you've committed to having it — help you prepare for it properly.

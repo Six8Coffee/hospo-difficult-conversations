@@ -2,6 +2,11 @@
 
 A folder-based AI coach for hospitality managers who know they need to have a difficult conversation with a staff member — and keep not having it.
 
+**Try it live:** [hospo-coach.daniel-b2f.workers.dev](https://hospo-coach.daniel-b2f.workers.dev)
+*(Drop this prompt in to see it immediately: "My barista has been coming in late pretty regularly — maybe four or five times in the last two weeks. I haven't really said anything yet.")*
+
+Built by a café owner who has been on both sides of this conversation.
+
 ---
 
 ## Who this is for
@@ -12,11 +17,33 @@ This coach is not for HR departments. It's for the person running the floor.
 
 ---
 
+## How it works — The Protocol Gate
+
+The coach runs every session through three stages in order. The gate cannot be skipped.
+
+```
+[Manager describes the situation]
+           ↓
+Stage 1 — Acknowledge & Diagnose
+  Understand the situation. Find out what kind of help they need.
+           ↓
+Stage 2 — Schedule Lock  ← GATE
+  "Let's get a time locked in first. When's most likely to work
+   for you and [name]?" Nothing in Stage 3 until a date is given.
+           ↓  (only after date committed)
+Stage 3 — Framework
+  Structure the conversation. Prepare. Work through what to say.
+```
+
+**Why the gate:** Handing a manager the conversation framework before they've committed to having the conversation feels like progress. It isn't. It's just more comfortable than opening the calendar. The coach doesn't do that.
+
+---
+
 ## How to use it
 
 Drop this folder into a Claude project. Claude becomes the coach.
 
-Start by describing your situation. The coach will ask when the conversation is scheduled before anything else. That's intentional — get a time locked in before working on how.
+Start by describing your situation. The coach will acknowledge it, ask what you need help with, then lock in a time before giving you any framework or tactics.
 
 **To prepare for a conversation you've already scheduled:** ask the coach to walk you through the conversation framework.
 
@@ -31,16 +58,16 @@ Start by describing your situation. The coach will ask when the conversation is 
 | File | Job |
 |---|---|
 | `identity.md` | Who the coach is and what they cover |
-| `rules.md` | How the coach operates — when to ask, when to push back, when to redirect |
+| `rules.md` | The Protocol Gate — how the coach operates across all three stages |
 | `examples.md` | Three real coaching exchanges showing avoidance being named and worked through |
 | `reference/avoidance-patterns.md` | The five avoidance patterns and what they sound like |
-| `reference/conversation-framework.md` | Structure for the performance conversation itself |
+| `reference/conversation-framework.md` | Structure for the performance conversation itself — only loaded at Stage 3 |
 | `reference/escalation-guide.md` | Verbal warning through termination, Fair Work basics |
 
 ---
 
 ## What to expect
 
-The coach asks before it advises. It will ask when the conversation is scheduled. It will ask what specifically is stopping you. It will name the emotion underneath the hesitation if it can see it.
+The coach will acknowledge the situation before asking about scheduling. It will ask what you need help with — knowing what to say, or actually getting yourself to have the conversation. It will name the emotion underneath the hesitation if it can see it.
 
-It won't give you a script. It will help you figure out what's in the way and get the conversation on the calendar.
+It won't give you a script. It will help you figure out what's in the way, get the conversation on the calendar, and then prepare properly for it.

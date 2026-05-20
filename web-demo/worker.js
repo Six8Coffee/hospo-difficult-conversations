@@ -324,6 +324,31 @@ const HTML = `<!DOCTYPE html>
     .btn-download:hover:not(:disabled) { background: #1a4a7a; color: #e8f4ff; border-color: #1a4a7a; }
     .btn-download:disabled { opacity: 0.35; cursor: default; }
 
+    /* ── Suggestion chip ── */
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 4px;
+      align-self: flex-start;
+    }
+
+    .suggestion-chip {
+      background: #1a4070;
+      color: #b8d8f8;
+      border: none;
+      border-radius: 16px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      line-height: 1.4;
+      text-align: left;
+      transition: background 0.15s;
+    }
+
+    .suggestion-chip:hover { background: #1a5a9a; }
+
     /* ── Mobile: full screen ── */
     @media (max-width: 700px) {
       body { padding: 0; background: #eef5fc; align-items: stretch; }
@@ -468,12 +493,38 @@ const HTML = `<!DOCTYPE html>
 
   sendBtn.addEventListener('click', send)
 
+  function addSuggestions(chips) {
+    const wrap = document.createElement('div')
+    wrap.className = 'suggestions'
+    wrap.id = 'suggestions'
+    chips.forEach(text => {
+      const btn = document.createElement('button')
+      btn.className = 'suggestion-chip'
+      btn.textContent = text
+      btn.addEventListener('click', () => {
+        inputEl.value = text
+        inputEl.style.height = 'auto'
+        inputEl.style.height = Math.min(inputEl.scrollHeight, 130) + 'px'
+        wrap.remove()
+        inputEl.focus()
+      })
+      wrap.appendChild(btn)
+    })
+    messagesEl.appendChild(wrap)
+    scrollToBottom()
+  }
+
   // Typewriter intro
   const INTRO = "Hey there, I'm Hosea — your coach for difficult conversations in hospo. Tell me what's going on and we can work through it together.\\n\\nOne quick note: this session isn't saved anywhere. If you close or refresh the page it's gone — use the download button below to keep a copy."
   sendBtn.disabled = true
   inputEl.disabled = true
   const introBubble = buildCoachRow('')
   typeInto(introBubble, INTRO, 22).then(() => {
+    addSuggestions([
+      "My barista has been coming in late pretty regularly — four or five times in the last two weeks. I haven't really said anything yet.",
+      "I need to have a performance conversation with someone who's been here three years. We're basically friends now and I don't know how to start.",
+      "I had the conversation yesterday. It went okay but now they're being really quiet on shift. I'm worried they're about to quit."
+    ])
     sendBtn.disabled = false
     inputEl.disabled = false
     inputEl.focus()
