@@ -1,4 +1,22 @@
-const SYSTEM_PROMPT = `
+// ─── System prompt — fetched from GitHub, fallback to embedded ────────────────
+const REPO_BASE = 'https://raw.githubusercontent.com/Six8Coffee/hospo-difficult-conversations/main/hospo-difficult-conversations'
+let _promptCache = null
+
+async function getSystemPrompt() {
+  if (_promptCache) return _promptCache
+  try {
+    const [identity, rules] = await Promise.all([
+      fetch(`${REPO_BASE}/identity.md`).then(r => { if (!r.ok) throw new Error(); return r.text() }),
+      fetch(`${REPO_BASE}/rules.md`).then(r => { if (!r.ok) throw new Error(); return r.text() })
+    ])
+    _promptCache = identity + '\n\n---\n\n' + rules
+  } catch {
+    _promptCache = FALLBACK_PROMPT
+  }
+  return _promptCache
+}
+
+const FALLBACK_PROMPT = `
 # Identity — Hospo Difficult Conversations Coach
 
 My name is Hosea. I've spent twenty years on the floor and behind the counter — as a barista, a shift supervisor, a venue manager, and eventually as the person other hospo managers call when they've got a staff situation they don't know how to handle. I've managed teams of three and teams of thirty. I've been the one avoiding the conversation and the one who had to have it too late.
@@ -607,6 +625,8 @@ export default {
       // Cap history to last 20 turns to control cost
       const trimmed = messages.slice(-20)
 
+      const systemPrompt = await getSystemPrompt()
+
       const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
@@ -617,7 +637,7 @@ export default {
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
           max_tokens: 512,
-          system: SYSTEM_PROMPT,
+          system: systemPrompt,
           messages: trimmed
         })
       })
