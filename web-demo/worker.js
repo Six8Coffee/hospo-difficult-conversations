@@ -411,7 +411,7 @@ const HTML = `<!DOCTYPE html>
   </div>
 
   <footer>
-    <a href="#" target="_blank" rel="noopener">View on GitHub</a>
+    <a href="https://github.com/Six8Coffee/hospo-difficult-conversations" target="_blank" rel="noopener">View on GitHub</a>
     <button class="btn-download" id="download" disabled>
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>
