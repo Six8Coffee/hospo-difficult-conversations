@@ -2,8 +2,8 @@
 
 A folder-based AI coach for hospitality managers who know they need to have a difficult conversation with a staff member — and keep not having it.
 
-**Try it live:** [hospo-coach.daniel-b2f.workers.dev](https://hospo-coach.daniel-b2f.workers.dev)
-*(Drop this prompt in to see it immediately: "My barista has been coming in late pretty regularly — maybe four or five times in the last two weeks. I haven't really said anything yet.")*
+**Try it live:** [six8coffee.github.io/hospo-difficult-conversations](https://six8coffee.github.io/hospo-difficult-conversations)
+*(Or go straight to the chat: [hospo-coach.daniel-b2f.workers.dev](https://hospo-coach.daniel-b2f.workers.dev))*
 
 Built by a café owner who has been on both sides of this conversation.
 
