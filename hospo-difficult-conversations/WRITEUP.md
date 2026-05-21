@@ -10,4 +10,4 @@ A conversation framework handed to a manager who hasn't scheduled the conversati
 
 ## The gap
 
-Most entries will teach managers how to have a difficult conversation better. This one starts at the actual problem: managers aren't having the conversation at all. The avoidance patterns in `reference/avoidance-patterns.md` — perpetual delay, the soft mention, passive waiting, minimising, catastrophising the outcome — are the real blockers. A script doesn't fix those. A gate does. Built by a café owner who has been on both sides of this conversation — as the manager who kept not having it, and as the manager who had it too late.
+Most coaches will teach managers how to have a difficult conversation better. This one starts at the actual problem: managers aren't having the conversation at all. The avoidance patterns in `reference/avoidance-patterns.md` — perpetual delay, the soft mention, passive waiting, minimising, catastrophising the outcome — are the real blockers. A script doesn't fix those. A gate does. Built by a café owner who has been on both sides of this conversation — as the manager who kept not having it, and as the manager who had it too late.
