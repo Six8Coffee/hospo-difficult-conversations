@@ -2,7 +2,7 @@
 
 A folder-based AI coach for hospitality managers — specifically the conversation they know they need to have with a staff member and keep not scheduling.
 
-**Try it live → [hospo-coach.daniel-b2f.workers.dev](https://hospo-coach.daniel-b2f.workers.dev)**
+**Try it live → [six8coffee.github.io/hospo-difficult-conversations](https://six8coffee.github.io/hospo-difficult-conversations)**
 
 ---
 
