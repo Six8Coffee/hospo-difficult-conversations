@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosea — Hospo Difficult Conversations Coach</title>
+  <meta name="description" content="A coaching tool for hospo managers who know what needs to be said — and keep finding reasons not to say it.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0b1e38;
+      --navy-mid:   #132d52;
+      --navy-light: #1a4070;
+      --blue:       #1a4a8a;
+      --blue-light: #1a6896;
+      --accent:     #4fc3f7;
+      --text-light: #e8f4ff;
+      --text-muted: #b8d8f8;
+      --body:       #1a2a3a;
+      --body-muted: #3a5a7a;
+      --bg:         #f8fbff;
+      --bg-alt:     #eef5fc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      color: var(--body);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); line-height: 1.2; font-weight: 700; letter-spacing: -0.01em; }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.3; font-weight: 700; }
+    p  { font-size: 1.05rem; line-height: 1.75; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(11, 30, 56, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo { color: var(--text-light); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; text-decoration: none; }
+    .logo span { color: var(--accent); }
+
+    .btn {
+      display: inline-block;
+      border: none;
+      border-radius: 32px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.12s, background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: scale(1.03); }
+
+    .btn-accent  { background: var(--accent); color: var(--navy); padding: 9px 22px; font-size: 0.9rem; }
+    .btn-accent:hover { background: #7dd8f8; }
+
+    .btn-large   { background: var(--accent); color: var(--navy); padding: 16px 38px; font-size: 1.1rem; font-weight: 700; }
+    .btn-large:hover { background: #7dd8f8; }
+
+    /* ── Layout helpers ── */
+    .section       { padding: 88px 24px; }
+    .section-alt   { background: var(--bg-alt); }
+    .section-dark  { background: var(--navy);     color: var(--text-light); }
+    .section-mid   { background: var(--navy-mid); color: var(--text-light); }
+
+    .wrap      { max-width: 840px;  margin: 0 auto; }
+    .wrap-wide { max-width: 1080px; margin: 0 auto; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(11,30,56,0.90) 0%, rgba(11,30,56,0.75) 60%, rgba(26,74,138,0.68) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-content h1 { color: #fff; margin-bottom: 22px; }
+
+    .hero-lead {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 18px; }
+
+    .hero-note { color: rgba(184,216,248,0.50); font-size: 0.82rem; }
+
+    /* ── Situation ── */
+    .situation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .situation-photo {
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      background: var(--navy-light);
+    }
+    .situation-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .situation-text h2 { color: #fff; margin-bottom: 24px; }
+    .situation-text p  { color: var(--text-muted); margin-bottom: 18px; }
+    .situation-text p:last-child { margin-bottom: 0; }
+
+    /* ── Avoidance ── */
+    .avoidance-intro { max-width: 600px; margin-bottom: 48px; }
+    .avoidance-intro h2 { color: var(--navy); margin-bottom: 12px; }
+    .avoidance-intro p  { color: var(--body-muted); }
+
+    .patterns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+    }
+
+    .pattern {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 28px 28px 24px;
+      border-left: 4px solid var(--blue-light);
+      box-shadow: 0 2px 16px rgba(26,74,138,0.07);
+    }
+
+    .pattern-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #8aaac8;
+      margin-bottom: 8px;
+    }
+
+    .pattern-voice {
+      font-style: italic;
+      color: var(--blue-light);
+      font-size: 1rem;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .pattern p { font-size: 0.92rem; color: var(--body-muted); line-height: 1.65; }
+
+    /* ── Cost ── */
+    .cost-inner { text-align: center; max-width: 660px; margin: 0 auto; }
+    .cost-inner h2 { color: #fff; margin-bottom: 24px; }
+    .cost-inner p  { color: var(--text-muted); margin-bottom: 18px; }
+    .cost-inner p:last-child { margin-bottom: 0; }
+
+    .cost-pull {
+      font-size: 1.22rem !important;
+      color: #fff !important;
+      font-style: italic;
+      line-height: 1.55 !important;
+      border-left: 3px solid var(--accent);
+      text-align: left;
+      padding-left: 24px;
+      margin: 32px 0 !important;
+    }
+
+    /* ── How it works ── */
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .how-text h2 { color: var(--navy); margin-bottom: 20px; }
+    .how-text p  { color: var(--body-muted); margin-bottom: 16px; }
+    .how-text p:last-child { margin-bottom: 0; }
+
+    .gate {
+      background: var(--navy);
+      border-radius: 18px;
+      padding: 32px;
+    }
+
+    .gate-step {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(184,216,248,0.10);
+    }
+    .gate-step:first-child { padding-top: 0; }
+    .gate-step:last-child  { border-bottom: none; padding-bottom: 0; }
+
+    .gate-num {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--text-light);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .gate-num.is-gate { background: var(--accent); color: var(--navy); }
+
+    .gate-body strong { display: block; color: #fff; font-size: 0.95rem; margin-bottom: 5px; }
+    .gate-body p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; }
+
+    .gate-pill {
+      display: inline-block;
+      background: rgba(79,195,247,0.14);
+      color: var(--accent);
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 10px;
+      margin-top: 7px;
+    }
+
+    /* ── Two Ways ── */
+    .ways-heading { margin-bottom: 48px; }
+    .ways-heading h2 { color: var(--navy); margin-bottom: 10px; }
+    .ways-heading p  { color: var(--body-muted); }
+
+    .ways-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .way { border-radius: 20px; padding: 38px; }
+    .way-dark  { background: var(--navy); }
+    .way-light { background: #fff; box-shadow: 0 4px 24px rgba(26,74,138,0.09); }
+
+    .way-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .way-dark  .way-label { background: rgba(79,195,247,0.12); color: var(--accent); }
+    .way-light .way-label { background: var(--bg-alt); color: var(--blue); }
+
+    .way h3 { margin-bottom: 12px; }
+    .way-dark  h3 { color: #fff; }
+    .way-light h3 { color: var(--navy); }
+
+    .way > p { font-size: 0.95rem; margin-bottom: 20px; }
+    .way-dark  > p { color: var(--text-muted); }
+    .way-light > p { color: var(--body-muted); }
+
+    .way-features { list-style: none; margin-bottom: 28px; }
+    .way-features li { font-size: 0.88rem; padding: 5px 0 5px 22px; position: relative; }
+    .way-features li::before { content: '✓'; position: absolute; left: 0; font-weight: 700; }
+    .way-dark  .way-features li { color: var(--text-muted); }
+    .way-dark  .way-features li::before { color: var(--accent); }
+    .way-light .way-features li { color: var(--body-muted); }
+    .way-light .way-features li::before { color: var(--blue-light); }
+
+    .way-link { font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+    .way-dark  .way-link { color: var(--accent); }
+    .way-light .way-link { color: var(--blue); }
+
+    /* ── Final CTA ── */
+    .final-cta { text-align: center; }
+    .final-cta h2 { color: #fff; margin-bottom: 14px; }
+    .final-cta .wrap > p { color: var(--text-muted); max-width: 460px; margin: 0 auto 40px; }
+
+    .final-note { display: block; margin-top: 14px; color: rgba(184,216,248,0.42); font-size: 0.82rem; }
+
+    /* ── Footer ── */
+    footer {
+      background: #060f1c;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer p { font-size: 0.83rem; color: #3a6080; line-height: 1.55; }
+    footer a  { color: #4a7090; text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 20px; align-items: center; }
+    .footer-divider { color: #243a50; }
+
+    /* ── Responsive ── */
+    @media (max-width: 740px) {
+      .section { padding: 64px 20px; }
+      nav { padding: 12px 20px; }
+
+      .situation-grid,
+      .how-grid,
+      .ways-grid { grid-template-columns: 1fr; }
+
+      .situation-photo { aspect-ratio: 16/9; order: -1; }
+
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-large { width: 100%; max-width: 320px; text-align: center; }
+
+      .cost-pull { font-size: 1.1rem !important; }
+
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a class="logo" href="#">Hosea<span>.</span></a>
+  <a class="btn btn-accent" href="https://hospo-coach.daniel-b2f.workers.dev" target="_blank" rel="noopener">Try it free →</a>
+</nav>
+
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-photo"></div>
+  <div class="hero-content">
+    <h1>The conversation you keep not having.</h1>
+    <p class="hero-lead">A coaching tool for hospo managers who know what needs to be said — and keep finding reasons not to say it.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-large" href="https://hospo-coach.daniel-b2f.workers.dev" target="_blank" rel="noopener">Talk to Hosea — it's free →</a>
+    </div>
+    <p class="hero-note">No signup. No account. Open it on your phone right now.</p>
+  </div>
+</div>
+
+
+<!-- The Situation -->
+<section class="section section-dark">
+  <div class="wrap-wide">
+    <div class="situation-grid">
+      <div class="situation-photo">
+        <img
+          src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80"
+          alt="Café floor"
+          loading="lazy"
+          onerror="this.parentElement.style.background='#1a4070'">
+      </div>
+      <div class="situation-text">
+        <h2>You're not just managing a team.</h2>
+        <p>In hospitality, the line between manager and teammate is thin. You're on the floor together for six-hour stretches. You know each other's families. You've covered shifts, stayed late through bad services, shared the quiet after a hard Saturday.</p>
+        <p>When someone starts slipping — coming in late, attitude creeping in, performance quietly dropping — the conversation you need to have doesn't feel like a management decision. It feels personal. Like you'd be pulling rank on a mate.</p>
+        <p>So you wait. You hope it fixes itself. You mention it once, casually, during service — and count that as having said something.</p>
+        <p>And the weeks go by.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Avoidance Patterns -->
+<section class="section section-alt">
+  <div class="wrap-wide">
+    <div class="avoidance-intro">
+      <h2>Why you keep not having it.</h2>
+      <p>Avoidance doesn't feel like avoidance. It always sounds completely reasonable at the time.</p>
+    </div>
+    <div class="patterns">
+      <div class="pattern">
+        <div class="pattern-tag">Passive waiting</div>
+        <div class="pattern-voice">"I was hoping it would sort itself out."</div>
+        <p>You're watching without acting — treating silence as a kind of management. Once someone learns that lateness or attitude has no follow-through, the behaviour usually continues.</p>
+      </div>
+      <div class="pattern">
+        <div class="pattern-tag">The soft mention</div>
+        <div class="pattern-voice">"I've mentioned it."</div>
+        <p>You said something once, casually, during service. From their side, it probably didn't register as anything significant. A soft mention and a real performance conversation are not the same thing.</p>
+      </div>
+      <div class="pattern">
+        <div class="pattern-tag">The friendship trap</div>
+        <div class="pattern-voice">"We've caught up outside of work."</div>
+        <p>They've been with you for three years. You're basically friends now. Saying something feels like a betrayal — but how would they feel finding out you knew things were serious and said nothing?</p>
+      </div>
+      <div class="pattern">
+        <div class="pattern-tag">Perpetual delay</div>
+        <div class="pattern-voice">"It's just not the right time."</div>
+        <p>Busy service. Someone's having a rough week outside work. The long weekend coming up. There will always be a reason. In hospo, the perfect moment never arrives on its own.</p>
+      </div>
+      <div class="pattern">
+        <div class="pattern-tag">Catastrophising</div>
+        <div class="pattern-voice">"If I say something, she'll quit."</div>
+        <p>You've run the mental simulation and it ends badly. That simulation is speculative. The actual conversation almost always lands differently than the imagined one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- The Cost -->
+<section class="section section-mid">
+  <div class="cost-inner">
+    <h2>But silence has a cost.</h2>
+    <p>Every week you don't say something, your team is watching. They're drawing conclusions about what you're prepared to tolerate. They adjust their own effort accordingly.</p>
+    <p class="cost-pull">"The conversation you're protecting someone from is already happening — it's just happening without you."</p>
+    <p>The longer it runs, the harder the conversation becomes. What could have been a five-minute chat becomes a written warning. The small problem compounds. And your own resentment quietly builds.</p>
+  </div>
+</section>
+
+
+<!-- How It Works -->
+<section class="section">
+  <div class="wrap-wide">
+    <div class="how-grid">
+      <div class="how-text">
+        <h2>Hosea doesn't give you a script.</h2>
+        <p>Most advice skips straight to tactics — what to say, how to open it, how to handle pushback. That's useful. But only once you've actually committed to having the conversation.</p>
+        <p>A conversation framework handed to a manager who hasn't scheduled it is just a comfort blanket. It feels like progress. It isn't. It's just more comfortable than opening the calendar.</p>
+        <p>Hosea runs a simple three-stage process. It won't hand over any tactics until you've done the harder thing first — got a time locked in the diary.</p>
+        <p>Once that's done, it helps you prepare properly: what to say, how to open it, what to do when it gets hard, and what to note down afterward.</p>
+      </div>
+      <div class="gate">
+        <div class="gate-step">
+          <div class="gate-num">1</div>
+          <div class="gate-body">
+            <strong>Acknowledge &amp; diagnose</strong>
+            <p>Hosea listens to the situation first. It works out what kind of help you actually need — knowing what to say, or getting yourself to schedule it at all.</p>
+          </div>
+        </div>
+        <div class="gate-step">
+          <div class="gate-num is-gate">2</div>
+          <div class="gate-body">
+            <strong>Schedule lock</strong>
+            <p>Get a time in the calendar. This is the gate. Nothing in Stage 3 happens without a day and time committed.</p>
+            <span class="gate-pill">Cannot be skipped.</span>
+          </div>
+        </div>
+        <div class="gate-step">
+          <div class="gate-num">3</div>
+          <div class="gate-body">
+            <strong>Prepare for it properly</strong>
+            <p>Now that the conversation is real — structure it, prepare for the hard moments, and know what to document afterward.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Two Ways -->
+<section class="section section-alt">
+  <div class="wrap-wide">
+    <div class="ways-heading">
+      <h2>Two ways to use it.</h2>
+      <p>Depending on where you're at and what you need.</p>
+    </div>
+    <div class="ways-grid">
+      <div class="way way-dark">
+        <div class="way-label">Right now</div>
+        <h3>Use the web chat</h3>
+        <p>Open it in your browser. No account, no setup. Describe your situation and Hosea coaches you through it.</p>
+        <ul class="way-features">
+          <li>Free, no signup required</li>
+          <li>Works on your phone</li>
+          <li>Download the conversation at the end</li>
+          <li>Good for a single situation you need to work through today</li>
+        </ul>
+        <a class="way-link" href="https://hospo-coach.daniel-b2f.workers.dev" target="_blank" rel="noopener">Open Hosea →</a>
+      </div>
+      <div class="way way-light">
+        <div class="way-label">Ongoing coaching</div>
+        <h3>Add to Claude Projects</h3>
+        <p>Download the folder and load it into a Claude Project. Hosea becomes a coach that remembers.</p>
+        <ul class="way-features">
+          <li>Persistent memory across sessions</li>
+          <li>Hosea recalls what you discussed last time</li>
+          <li>Full reference library included</li>
+          <li>Better for ongoing situations or multiple staff challenges</li>
+        </ul>
+        <a class="way-link" href="https://github.com/Six8Coffee/hospo-difficult-conversations" target="_blank" rel="noopener">Download from GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Final CTA -->
+<section class="section section-dark final-cta">
+  <div class="wrap">
+    <h2>Ready to have the conversation?</h2>
+    <p>Start with your situation. Hosea will take it from there.</p>
+    <a class="btn btn-large" href="https://hospo-coach.daniel-b2f.workers.dev" target="_blank" rel="noopener">Talk to Hosea — it's free →</a>
+    <span class="final-note">No signup. No account. Works on your phone.</span>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+  <p>Hosea — built by a café owner.<br>For hospo managers, from someone who's been there.</p>
+  <div class="footer-links">
+    <a href="https://github.com/Six8Coffee/hospo-difficult-conversations" target="_blank" rel="noopener">GitHub</a>
+    <span class="footer-divider">·</span>
+    <a href="https://hospo-coach.daniel-b2f.workers.dev" target="_blank" rel="noopener">Open coach</a>
+    <span class="footer-divider">·</span>
+    <span style="color:#3a6080;font-size:0.83rem">MIT Licensed</span>
+  </div>
+</footer>
+
+</body>
+</html>
